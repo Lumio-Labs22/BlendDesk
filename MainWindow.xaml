@@ -1,0 +1,355 @@
+<local:AnimatedWindow x:Class="BlenderLibrary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:BlenderLibrary"
+        Title="BlendDesk" Icon="Assets/BlendDesk.ico" Width="1190" Height="780" MinWidth="850" MinHeight="595"
+        WindowStartupLocation="CenterScreen" xml:lang="en-US"
+        Background="{DynamicResource Paper}" Foreground="{DynamicResource Ink}"
+        FontFamily="Segoe UI Variable Text, Segoe UI" FontSize="13"
+        UseLayoutRounding="True" PreviewKeyDown="WindowKeyDown" AllowDrop="True"
+        PreviewDragEnter="ShowDropTarget" PreviewDragOver="ShowDropTarget"
+        PreviewDragLeave="HideDropTarget" PreviewDrop="ImportDrop">
+    <local:AnimatedWindow.Resources>
+        <Style x:Key="WorkspacePanel" TargetType="ContentControl" BasedOn="{StaticResource AppPanel}">
+            <Setter Property="Background" Value="{DynamicResource WorkspaceFill}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource WorkspaceRim}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Visibility, ElementName=CustomBackdrop}" Value="Visible">
+                    <Setter Property="Background" Value="{DynamicResource BackgroundImagePanel}"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </local:AnimatedWindow.Resources>
+    <Grid Background="{DynamicResource Paper}">
+        <Border Background="{DynamicResource Glow}" IsHitTestVisible="False"/>
+        <Border Background="{DynamicResource CounterGlow}" IsHitTestVisible="False"/>
+        <Grid x:Name="CustomBackdrop" Visibility="Collapsed" ClipToBounds="True" IsHitTestVisible="False">
+            <Image x:Name="BackdropImage" Stretch="UniformToFill" RenderOptions.BitmapScalingMode="HighQuality"/>
+            <Border Background="{DynamicResource BackgroundImageTint}"/>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="209"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border BorderBrush="{DynamicResource Line}" BorderThickness="0,0,1,0" Padding="13,22,13,16">
+                <Border.Style>
+                    <Style TargetType="Border">
+                        <Setter Property="Background" Value="{DynamicResource SidebarFill}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Visibility, ElementName=CustomBackdrop}" Value="Visible">
+                                <Setter Property="Background" Value="{DynamicResource BackgroundImagePanel}"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="4,0,0,30">
+                        <Border Width="32" Height="32" CornerRadius="8" Background="{DynamicResource PrimaryFill}">
+                            <Path Data="M 1,7 L 9,2 L 17,7 L 9,12 Z M 1,11 L 9,16 L 17,11"
+                                  Width="19" Height="17" Stretch="Uniform"
+                                  Stroke="{DynamicResource AccentInk}" StrokeThickness="1.5"
+                                  StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round"/>
+                        </Border>
+                        <TextBlock Text="BlendDesk" FontSize="18" FontWeight="SemiBold" Margin="10,0,0,0" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Grid.Row="1" Text="Sources" Foreground="{DynamicResource Muted}" FontWeight="SemiBold" Margin="6,0,0,7"/>
+                    <ListBox x:Name="Sources" Grid.Row="2" SelectionChanged="SourceSelectionChanged" BorderThickness="0"
+                             Background="Transparent" ItemContainerStyle="{StaticResource SourceRow}"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" AutomationProperties.Name="Library sources">
+                        <ListBox.Resources>
+                            <Style TargetType="ScrollBar" BasedOn="{StaticResource SlimVerticalScrollBar}"/>
+                        </ListBox.Resources>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel ToolTip="{Binding Path}">
+                                    <Border Width="23" Height="28" Margin="0,0,6,0">
+                                        <TextBlock HorizontalAlignment="Center" Foreground="{DynamicResource Accent}">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock" BasedOn="{StaticResource Icon}">
+                                                    <Setter Property="Text" Value="&#xE8B7;"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsFile}" Value="True">
+                                                            <Setter Property="Text" Value="&#xE8A5;"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                    </Border>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding Name}" Style="{StaticResource ProjectName}"/>
+                                        <TextBlock Text="{Binding Kind}" Style="{StaticResource Secondary}"/>
+                                    </StackPanel>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button x:Name="RemoveSourceButton" Grid.Row="3" Content="Remove source" Click="RemoveSource"
+                            Style="{StaticResource QuietButton}" HorizontalAlignment="Left"
+                            IsEnabled="False" Margin="0,7,0,0" ToolTip="Remove from BlendDesk"/>
+                    <Border Grid.Row="4" BorderBrush="{DynamicResource Line}" BorderThickness="0,1,0,0" Padding="0,9,0,0" Margin="0,7,0,0">
+                        <Button x:Name="SettingsButton" Click="OpenSettings" AutomationProperties.Name="Settings"
+                                Style="{StaticResource QuietButton}" HorizontalAlignment="Left">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE713;" Style="{StaticResource Icon}" Margin="0,0,8,0"/>
+                                <TextBlock Text="Settings"/>
+                            </StackPanel>
+                        </Button>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <Grid Grid.Column="1" Margin="24,20,24,17">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <DockPanel Margin="1,1,0,14">
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button Click="AddFolder" Content="Add folder" Style="{StaticResource QuietButton}" Margin="0,0,8,0"/>
+                        <Button Click="AddFile" Style="{StaticResource PrimaryButton}" AutomationProperties.Name="Add files">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="&#xE710;" Style="{StaticResource Icon}" Margin="0,0,7,0"/>
+                                <TextBlock Text="Add files"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Text="Project library" Style="{StaticResource Title}"/>
+                </DockPanel>
+
+                <ContentControl Grid.Row="1" Style="{StaticResource FloatingControls}" Margin="0,0,0,12">
+                    <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,9" AutomationProperties.Name="Project filter">
+                        <RadioButton x:Name="AllProjects" Content="All projects" GroupName="ProjectFilter" IsChecked="True"
+                                     Click="ProjectFilterChanged" Style="{StaticResource ViewButton}"/>
+                        <RadioButton x:Name="FavoritesOnly" Content="Favorites" GroupName="ProjectFilter"
+                                     Click="ProjectFilterChanged" Style="{StaticResource ViewButton}" Margin="5,0,0,0"/>
+                        <RadioButton x:Name="RecentlyOpened" Content="Recently opened" GroupName="ProjectFilter"
+                                     Click="ProjectFilterChanged" Style="{StaticResource ViewButton}" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Border CornerRadius="{DynamicResource ToolbarFieldRadius}" Background="{DynamicResource Surface}"
+                                BorderBrush="{DynamicResource GlassRim}" BorderThickness="1">
+                            <DockPanel>
+                                <TextBlock Text="&#xE721;" Style="{StaticResource Icon}" Foreground="{DynamicResource Muted}" Margin="11,0,0,0"/>
+                                <Grid>
+                                    <TextBox x:Name="Search" AutomationProperties.Name="Search projects" TextChanged="FilterChanged"
+                                             Background="Transparent" Foreground="{DynamicResource Ink}" CaretBrush="{DynamicResource Ink}"
+                                         SelectionBrush="{DynamicResource PrimaryFill}" SelectionTextBrush="{DynamicResource AccentInk}"
+                                             BorderThickness="0" Padding="8,7" VerticalContentAlignment="Center"/>
+                                    <TextBlock Text="Search projects and notes" Margin="9,0" Foreground="{DynamicResource Muted}"
+                                               VerticalAlignment="Center" IsHitTestVisible="False">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text, ElementName=Search}" Value="">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Grid>
+                            </DockPanel>
+                        </Border>
+                        <Button x:Name="SortButton" Grid.Column="1" Content="Sort ▾" Margin="8,0" Click="OpenSortMenu"
+                                ToolTip="Sort projects" AutomationProperties.Name="Sort projects">
+                            <Button.ContextMenu>
+                                <ContextMenu Placement="Bottom" Background="{DynamicResource Raised}" Foreground="{DynamicResource Ink}">
+                                    <MenuItem Header="Recently modified" Tag="{x:Static local:ProjectSort.Modified}" Click="SortChanged"/>
+                                    <MenuItem Header="Name A–Z" Tag="{x:Static local:ProjectSort.Name}" Click="SortChanged"/>
+                                    <MenuItem Header="Largest first" Tag="{x:Static local:ProjectSort.Size}" Click="SortChanged"/>
+                                    <MenuItem Header="Recently opened" Tag="{x:Static local:ProjectSort.LastOpened}" Click="SortChanged"/>
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                        <Border Grid.Column="2" Background="{DynamicResource Field}" BorderBrush="{DynamicResource GlassRim}"
+                                BorderThickness="1" CornerRadius="{DynamicResource ToolbarFieldRadius}" Padding="2" Margin="0,0,8,0">
+                            <StackPanel Orientation="Horizontal">
+                                <RadioButton x:Name="CardViewOption" Content="Cards" GroupName="ProjectView"
+                                             Click="ViewChanged" Style="{StaticResource ViewButton}"/>
+                                <RadioButton x:Name="ListViewOption" Content="List" GroupName="ProjectView"
+                                             Click="ViewChanged" Style="{StaticResource ViewButton}" IsChecked="True"/>
+                            </StackPanel>
+                        </Border>
+                        <Button x:Name="RefreshButton" Grid.Column="3" Click="RefreshLibrary" ToolTip="Refresh (F5)"
+                                Width="38" Height="38" Padding="0"
+                                AutomationProperties.Name="Refresh library">
+                            <TextBlock Text="&#xE72C;" Style="{StaticResource Icon}"/>
+                        </Button>
+                    </Grid>
+                    </StackPanel>
+                </ContentControl>
+
+                <ContentControl Grid.Row="2" Style="{StaticResource WorkspacePanel}" Padding="1">
+                    <Grid ClipToBounds="True">
+                        <DataGrid x:Name="Projects" AutomationProperties.Name="Projects" AutoGenerateColumns="False"
+                                  IsReadOnly="True" SelectionMode="Single" SelectionUnit="FullRow" IsSynchronizedWithCurrentItem="False"
+                                  CanUserAddRows="False" CanUserDeleteRows="False" HeadersVisibility="Column"
+                                  EnableRowVirtualization="True" RowHeight="42" Margin="0,0,0,4"
+                                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{DynamicResource Line}"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                  Background="Transparent" RowBackground="Transparent" BorderThickness="0"
+                                  SelectionChanged="ProjectSelectionChanged" MouseDoubleClick="OpenProjectItem" PreviewKeyDown="ProjectKeyDown">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn Header="★" Width="42" SortMemberPath="Favorite">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Style="{StaticResource FavoriteStar}" HorizontalAlignment="Center"
+                                                       AutomationProperties.Name="Favorite"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Project" Binding="{Binding Name}" SortMemberPath="Name" Width="1.2*" MinWidth="100"
+                                                    ElementStyle="{StaticResource ProjectName}"/>
+                                <DataGridTextColumn Header="Folder" Binding="{Binding Folder}" Width="1.5*" MinWidth="100">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource Trimmed}">
+                                            <Setter Property="Foreground" Value="{DynamicResource Muted}"/>
+                                            <Setter Property="ToolTip" Value="{Binding Folder}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Modified" Binding="{Binding Modified, StringFormat='MMM d, yyyy'}" SortMemberPath="Modified" Width="127"/>
+                                <DataGridTextColumn Header="Size" Binding="{Binding SizeText}" SortMemberPath="Size" Width="78"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <ListBox x:Name="Cards" Visibility="Collapsed" Margin="0,0,0,4" AutomationProperties.Name="Project cards"
+                                 SelectionMode="Single" IsSynchronizedWithCurrentItem="False" SelectionChanged="ProjectSelectionChanged"
+                                 MouseDoubleClick="OpenProjectItem" PreviewKeyDown="ProjectKeyDown" Background="Transparent"
+                                 BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="False"
+                                 ItemContainerStyle="{StaticResource ProjectCard}">
+                            <ListBox.Resources>
+                                <Style TargetType="ScrollBar" BasedOn="{StaticResource SlimVerticalScrollBar}"/>
+                            </ListBox.Resources>
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate><WrapPanel Orientation="Horizontal"/></ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel ToolTip="{Binding Path}">
+                                        <Border Height="149" Background="{DynamicResource Cover}" CornerRadius="7" Margin="0,0,0,10">
+                                            <Grid>
+                                                <Border CornerRadius="7" RenderOptions.BitmapScalingMode="HighQuality" local:Motion.RevealWhenVisible="True"
+                                                        AutomationProperties.Name="Scene preview">
+                                                    <Border.Style>
+                                                        <Style TargetType="Border">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Preview.Image}" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <Border.Background>
+                                                        <ImageBrush ImageSource="{Binding Preview.Image}" Stretch="Uniform"/>
+                                                    </Border.Background>
+                                                </Border>
+                                                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="8">
+                                                    <StackPanel.Style>
+                                                        <Style TargetType="StackPanel">
+                                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Preview.Image}" Value="{x:Null}">
+                                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </StackPanel.Style>
+                                                    <TextBlock Text="{Binding Preview.Message}" TextWrapping="Wrap" TextAlignment="Center"
+                                                               Style="{StaticResource Secondary}" Margin="0,0,0,6"/>
+                                                    <Button Content="Generate preview" Click="RenderScenePreview" Padding="9,5" FontSize="12">
+                                                        <Button.Style>
+                                                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Preview.CanRender}" Value="True">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Button.Style>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                        <DockPanel Height="23">
+                                            <TextBlock DockPanel.Dock="Right" Style="{StaticResource FavoriteStar}"
+                                                       AutomationProperties.Name="Favorite" Margin="6,0,0,0"/>
+                                            <TextBlock Text="{Binding Name}" FontSize="15" Style="{StaticResource ProjectName}" VerticalAlignment="Center"/>
+                                        </DockPanel>
+                                        <TextBlock Text="{Binding FolderName}" TextTrimming="CharacterEllipsis"
+                                                   Style="{StaticResource Secondary}" Margin="0,0,0,9"/>
+                                        <DockPanel>
+                                            <TextBlock DockPanel.Dock="Right" Text="{Binding SizeText}" Style="{StaticResource Secondary}"/>
+                                            <TextBlock Text="{Binding Modified, StringFormat='MMM d, yyyy'}" Style="{StaticResource Secondary}"/>
+                                        </DockPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <StackPanel x:Name="EmptyState" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="24"
+                                    local:Motion.RevealWhenVisible="True">
+                            <Border Width="42" Height="42" Background="{DynamicResource Field}" CornerRadius="11"
+                                    HorizontalAlignment="Center" Margin="0,0,0,12">
+                                <TextBlock Text="&#xE8B7;" Style="{StaticResource Icon}" FontSize="22" Foreground="{DynamicResource Accent}"
+                                           HorizontalAlignment="Center"/>
+                            </Border>
+                            <TextBlock x:Name="EmptyTitle" FontSize="19" FontWeight="SemiBold" TextAlignment="Center"/>
+                            <TextBlock x:Name="EmptyDetail" Foreground="{DynamicResource Muted}" TextAlignment="Center" TextWrapping="Wrap" Margin="0,5,0,0"/>
+                            <Button x:Name="EmptyAddButton" Content="Add files" Click="AddFile" Style="{StaticResource PrimaryButton}"
+                                    HorizontalAlignment="Center" Margin="0,15,0,0" Visibility="Collapsed"/>
+                            <Button x:Name="ClearFiltersButton" Content="Reset filters" Click="ClearFilters"
+                                    HorizontalAlignment="Center" Margin="0,15,0,0" Visibility="Collapsed"/>
+                        </StackPanel>
+                    </Grid>
+                </ContentControl>
+                <DockPanel Grid.Row="3" Margin="1,12,0,0">
+                    <ContentControl DockPanel.Dock="Right" Style="{StaticResource FloatingControls}">
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="DetailsButton" Content="Details" Click="ShowProjectDetails" IsEnabled="False"
+                                    Style="{StaticResource QuietButton}" ToolTip="Project details (Ctrl+I)"/>
+                            <Button x:Name="FavoriteButton" Content="Add favorite" Click="ToggleFavorite" IsEnabled="False"
+                                    Style="{StaticResource QuietButton}" Margin="7,0,0,0"/>
+                            <Button x:Name="RevealButton" Content="Show in Explorer" Click="RevealProject" IsEnabled="False"
+                                    Style="{StaticResource QuietButton}" Margin="7,0,0,0"/>
+                            <Button x:Name="OpenButton" Content="Open in Blender" Click="OpenProject" IsEnabled="False"
+                                    Style="{StaticResource PrimaryButton}" Margin="7,0,0,0"/>
+                        </StackPanel>
+                    </ContentControl>
+                    <TextBlock x:Name="Status" Foreground="{DynamicResource Muted}" VerticalAlignment="Center"
+                               Margin="0,0,10,0" TextWrapping="Wrap" AutomationProperties.LiveSetting="Polite"/>
+                </DockPanel>
+            </Grid>
+        </Grid>
+        <Grid x:Name="DropOverlay" Visibility="Collapsed" IsHitTestVisible="False" Margin="9" local:Motion.RevealWhenVisible="True">
+            <Border Background="{DynamicResource Paper}" Opacity="0.94" CornerRadius="15"/>
+            <Border BorderThickness="2" BorderBrush="{DynamicResource Accent}" CornerRadius="15"/>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20">
+                <TextBlock Text="&#xE8B7;" Style="{StaticResource Icon}" FontSize="37"
+                           Foreground="{DynamicResource Accent}" HorizontalAlignment="Center"/>
+                <TextBlock Text="Add to your library" Style="{StaticResource Title}" Margin="0,12,0,0"/>
+                <TextBlock Text="Drop Blender files or folders" Style="{StaticResource Secondary}"
+                           HorizontalAlignment="Center" Margin="0,6,0,0"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</local:AnimatedWindow>

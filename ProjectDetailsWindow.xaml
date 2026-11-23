@@ -1,0 +1,72 @@
+<local:AnimatedWindow x:Class="BlenderLibrary.ProjectDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:BlenderLibrary"
+        Title="Project details" Icon="Assets/BlendDesk.ico" Width="660" SizeToContent="Height"
+        ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterOwner" xml:lang="en-US"
+        Background="{DynamicResource Paper}" Foreground="{DynamicResource Ink}"
+        FontFamily="Segoe UI Variable Text, Segoe UI" FontSize="13" UseLayoutRounding="True">
+    <local:AnimatedWindow.Resources>
+        <Style x:Key="DetailValue" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,4,0,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+        <Style x:Key="DetailField" TargetType="TextBox">
+            <Setter Property="Foreground" Value="{DynamicResource Ink}"/>
+            <Setter Property="CaretBrush" Value="{DynamicResource Ink}"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="11,9"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        </Style>
+    </local:AnimatedWindow.Resources>
+    <Grid Background="{DynamicResource Paper}">
+        <Border Background="{DynamicResource Glow}" IsHitTestVisible="False"/>
+        <StackPanel Margin="26,23,26,22">
+            <TextBlock Text="Project details" Style="{StaticResource Secondary}"/>
+            <TextBlock Text="{Binding Name}" Style="{StaticResource Title}" ToolTip="{Binding Name}"
+                       TextTrimming="CharacterEllipsis" Margin="0,2,0,15"/>
+            <ContentControl Style="{StaticResource AppPanel}" Padding="15" Margin="0,0,0,15">
+                <StackPanel>
+                    <UniformGrid Columns="3" Margin="0,0,0,14">
+                        <StackPanel Margin="0,0,14,0">
+                            <TextBlock Text="Modified" Style="{StaticResource Secondary}"/>
+                            <TextBlock x:Name="ModifiedValue" Style="{StaticResource DetailValue}"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,14,0">
+                            <TextBlock Text="Last opened from BlendDesk" Style="{StaticResource Secondary}"/>
+                            <TextBlock x:Name="OpenedValue" Style="{StaticResource DetailValue}"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Text="File size" Style="{StaticResource Secondary}"/>
+                            <TextBlock Text="{Binding SizeText}" Style="{StaticResource DetailValue}"/>
+                        </StackPanel>
+                    </UniformGrid>
+                    <DockPanel LastChildFill="False" Margin="0,0,0,5">
+                        <TextBlock Text="File location" Style="{StaticResource Secondary}" VerticalAlignment="Center"/>
+                        <Button x:Name="CopyPathButton" Content="Copy path" Click="CopyPath" DockPanel.Dock="Right"
+                                Style="{StaticResource QuietButton}" Padding="10,5"/>
+                    </DockPanel>
+                    <Border Background="{DynamicResource Field}" BorderBrush="{DynamicResource GlassRim}"
+                            BorderThickness="1" CornerRadius="8">
+                        <TextBox Text="{Binding Path, Mode=OneWay}" Style="{StaticResource DetailField}" IsReadOnly="True"
+                                 MaxHeight="73" AutomationProperties.Name="Project file location"/>
+                    </Border>
+                </StackPanel>
+            </ContentControl>
+            <TextBlock Text="Project notes" Style="{StaticResource Section}" Margin="0,0,0,4"/>
+            <TextBlock Text="Notes are stored in your local BlendDesk library." Style="{StaticResource Secondary}" Margin="0,0,0,9"/>
+            <Border Background="{DynamicResource Field}" BorderBrush="{DynamicResource GlassRim}"
+                    BorderThickness="1" CornerRadius="8">
+                <TextBox x:Name="Notes" Style="{StaticResource DetailField}" Height="132" AcceptsReturn="True"
+                         MaxLength="3000" AutomationProperties.Name="Project notes"/>
+            </Border>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,16,0,0">
+                <Button Content="Cancel" Style="{StaticResource QuietButton}" IsCancel="True" Margin="0,0,8,0"/>
+                <Button Content="Save notes" Click="SaveNotes" Style="{StaticResource PrimaryButton}" IsDefault="True"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</local:AnimatedWindow>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>BlendDesk</AssemblyName>
+    <Product>BlendDesk</Product>
+    <Version>1.2.0</Version>
+    <ApplicationIcon>Assets\BlendDesk.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="render_preview.py" LogicalName="BlendDesk.render_preview.py"/>
+    <Resource Include="Assets\BlendDesk.ico"/>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="Paper" Color="#14110F"/>
+    <SolidColorBrush x:Key="BackgroundImageTint" Color="#A5130F0D"/>
+    <SolidColorBrush x:Key="BackgroundImagePanel" Color="#C2231914"/>
+    <SolidColorBrush x:Key="Ink" Color="#FFF1E4"/>
+    <SolidColorBrush x:Key="Muted" Color="#C8AA95"/>
+    <SolidColorBrush x:Key="Line" Color="#463026"/>
+    <SolidColorBrush x:Key="Surface" Color="#201915"/>
+    <SolidColorBrush x:Key="Raised" Color="#2B2019"/>
+    <SolidColorBrush x:Key="Field" Color="#231A15"/>
+    <SolidColorBrush x:Key="Hover" Color="#3C2A20"/>
+    <SolidColorBrush x:Key="Selected" Color="#4C2D1C"/>
+    <SolidColorBrush x:Key="Accent" Color="#FF9A51"/>
+    <SolidColorBrush x:Key="Cover" Color="#33241B"/>
+    <SolidColorBrush x:Key="FocusRim" Color="#FF9A51"/>
+    <SolidColorBrush x:Key="PrimaryFill" Color="#F7883C"/>
+    <SolidColorBrush x:Key="PrimaryRim" Color="#FFAA70"/>
+    <SolidColorBrush x:Key="GlassRim" Color="#54392B"/>
+    <SolidColorBrush x:Key="SidebarFill" Color="#1C1511"/>
+</ResourceDictionary>

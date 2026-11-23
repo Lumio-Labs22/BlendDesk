@@ -1,0 +1,39 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <SolidColorBrush x:Key="Paper" Color="#F6EDE3"/>
+    <SolidColorBrush x:Key="BackgroundImageTint" Color="#9BF0E1D1"/>
+    <SolidColorBrush x:Key="BackgroundImagePanel" Color="#BCFAEEE1"/>
+    <SolidColorBrush x:Key="Ink" Color="#251812"/>
+    <SolidColorBrush x:Key="Muted" Color="#634737"/>
+    <SolidColorBrush x:Key="Line" Color="#DCC2AD"/>
+    <SolidColorBrush x:Key="Surface" Color="#FFF5E9"/>
+    <SolidColorBrush x:Key="Raised" Color="#FCF1E4"/>
+    <SolidColorBrush x:Key="Field" Color="#F0E1D1"/>
+    <SolidColorBrush x:Key="Hover" Color="#F3DCC6"/>
+    <SolidColorBrush x:Key="Selected" Color="#F6D4B8"/>
+    <SolidColorBrush x:Key="Accent" Color="#98410F"/>
+    <SolidColorBrush x:Key="AccentInk" Color="#211108"/>
+    <SolidColorBrush x:Key="Cover" Color="#EDDDCD"/>
+    <SolidColorBrush x:Key="Glow" Color="Transparent"/>
+    <SolidColorBrush x:Key="CounterGlow" Color="Transparent"/>
+    <SolidColorBrush x:Key="FocusRim" Color="#A64812"/>
+    <SolidColorBrush x:Key="PrimaryFill" Color="#F5873C"/>
+    <SolidColorBrush x:Key="PrimaryRim" Color="#C75A20"/>
+    <SolidColorBrush x:Key="GlassRim" Color="#DEC6B2"/>
+    <SolidColorBrush x:Key="FloatingFill" Color="Transparent"/>
+    <SolidColorBrush x:Key="FloatingRim" Color="Transparent"/>
+    <SolidColorBrush x:Key="SidebarFill" Color="#ECDAC8"/>
+    <SolidColorBrush x:Key="WorkspaceFill" Color="Transparent"/>
+    <SolidColorBrush x:Key="WorkspaceRim" Color="Transparent"/>
+    <x:Null x:Key="ControlShadow"/>
+    <x:Null x:Key="PanelShadow"/>
+    <x:Null x:Key="FloatingShadow"/>
+    <system:Double x:Key="ReflectionStrength">0</system:Double>
+    <CornerRadius x:Key="ToolbarFieldRadius">9</CornerRadius>
+    <CornerRadius x:Key="PanelRadius">12</CornerRadius>
+    <CornerRadius x:Key="CardRadius">10</CornerRadius>
+    <CornerRadius x:Key="FloatingRadius">10</CornerRadius>
+    <Thickness x:Key="FloatingOutset">0</Thickness>
+    <Thickness x:Key="FloatingBorder">0</Thickness>
+</ResourceDictionary>

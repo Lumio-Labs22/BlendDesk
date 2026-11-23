@@ -1,0 +1,86 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <SolidColorBrush x:Key="Ink" Color="#FFF0E0"/>
+    <SolidColorBrush x:Key="Muted" Color="#CFAB93"/>
+    <SolidColorBrush x:Key="Line" Color="#7F936546"/>
+    <SolidColorBrush x:Key="Accent" Color="#FF9C58"/>
+    <SolidColorBrush x:Key="Cover" Color="#A6472B1D"/>
+    <SolidColorBrush x:Key="FocusRim" Color="#FF9C58"/>
+    <SolidColorBrush x:Key="SidebarFill" Color="#B32B1B13"/>
+    <SolidColorBrush x:Key="WorkspaceFill" Color="#8F322118"/>
+    <SolidColorBrush x:Key="WorkspaceRim" Color="#9F86543A"/>
+    <SolidColorBrush x:Key="BackgroundImageTint" Color="#A2150D09"/>
+    <LinearGradientBrush x:Key="BackgroundImagePanel" StartPoint="0,0" EndPoint="0.97,1">
+        <GradientStop Color="#C33A251A" Offset="0"/>
+        <GradientStop Color="#B3211510" Offset="0.64"/>
+        <GradientStop Color="#B4322118" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Paper" StartPoint="0.12,0" EndPoint="0.89,1">
+        <GradientStop Color="#171210" Offset="0"/>
+        <GradientStop Color="#1B130F" Offset="0.56"/>
+        <GradientStop Color="#110C0A" Offset="1"/>
+    </LinearGradientBrush>
+    <RadialGradientBrush x:Key="Glow" Center="0.92,0.03" GradientOrigin="0.95,0.06" RadiusX="0.78" RadiusY="0.96">
+        <GradientStop Color="#C579391D" Offset="0"/>
+        <GradientStop Color="#944D2314" Offset="0.48"/>
+        <GradientStop Color="#004D2314" Offset="1"/>
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="CounterGlow" Center="0.02,0.95" GradientOrigin="0.06,0.92" RadiusX="0.79" RadiusY="0.71">
+        <GradientStop Color="#BB57301D" Offset="0"/>
+        <GradientStop Color="#78361D12" Offset="0.48"/>
+        <GradientStop Color="#00361D12" Offset="1"/>
+    </RadialGradientBrush>
+    <LinearGradientBrush x:Key="Surface" StartPoint="0.08,0" EndPoint="0.94,1">
+        <GradientStop Color="#B2492D1E" Offset="0"/>
+        <GradientStop Color="#BC2C1C14" Offset="0.47"/>
+        <GradientStop Color="#992E1C13" Offset="0.85"/>
+        <GradientStop Color="#C4372117" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Raised" StartPoint="0.20,0" EndPoint="0.76,1">
+        <GradientStop Color="#D161402E" Offset="0"/>
+        <GradientStop Color="#BD3C261C" Offset="0.54"/>
+        <GradientStop Color="#CC492E21" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Field" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#81160E0A" Offset="0"/>
+        <GradientStop Color="#88342016" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Hover" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#D45B3928" Offset="0"/>
+        <GradientStop Color="#D8462C1F" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="Selected" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#D9693520" Offset="0"/>
+        <GradientStop Color="#E64C2717" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PrimaryFill" StartPoint="0.20,0" EndPoint="0.76,1">
+        <GradientStop Color="#FFAB68" Offset="0"/>
+        <GradientStop Color="#F8873E" Offset="0.50"/>
+        <GradientStop Color="#E56B2D" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlassRim" StartPoint="0.08,0" EndPoint="0.96,1">
+        <GradientStop Color="#D5C68C65" Offset="0"/>
+        <GradientStop Color="#896E4834" Offset="0.52"/>
+        <GradientStop Color="#B08D5B3E" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="PrimaryRim" StartPoint="0.10,0" EndPoint="0.90,1">
+        <GradientStop Color="#DDFFD1A4" Offset="0"/>
+        <GradientStop Color="#B9AF4F25" Offset="0.68"/>
+        <GradientStop Color="#D9F59C64" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="FloatingFill" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Color="#D05A3B2A" Offset="0"/>
+        <GradientStop Color="#A8372218" Offset="0.60"/>
+        <GradientStop Color="#C74A2E20" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="FloatingRim" StartPoint="0,0" EndPoint="0.94,1">
+        <GradientStop Color="#CCA7795C" Offset="0"/>
+        <GradientStop Color="#99724F3B" Offset="0.72"/>
+        <GradientStop Color="#C2976B50" Offset="1"/>
+    </LinearGradientBrush>
+    <DropShadowEffect x:Key="ControlShadow" Color="#0F0805" BlurRadius="9" ShadowDepth="2" Direction="270" Opacity="0.52"/>
+    <DropShadowEffect x:Key="PanelShadow" Color="#090502" BlurRadius="25" ShadowDepth="7" Direction="270" Opacity="0.59"/>
+    <DropShadowEffect x:Key="FloatingShadow" Color="#100904" BlurRadius="15" ShadowDepth="4" Direction="270" Opacity="0.57"/>
+    <system:Double x:Key="ReflectionStrength">0.23</system:Double>
+</ResourceDictionary>
